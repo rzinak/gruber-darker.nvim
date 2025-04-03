@@ -135,9 +135,10 @@ M.highlights.spell_rare = Highlight.new("SpellRare", { undercurl = opts.undercur
 -- Statusline
 
 ---Status line of current window
-M.highlights.status_line = Highlight.new("StatusLine", { fg = c.white, bg = c["bg+1"] })
+-- M.highlights.status_line = Highlight.new("StatusLine", { fg = c.white, bg = c["bg+1"] })
+M.highlights.status_line = Highlight.new("StatusLine", { fg = c.black, bg = c["bg+4"] })
 ---Status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-M.highlights.status_line_non_current = Highlight.new("StatusLineNC", { fg = c.quartz, bg = c["bg+1"] })
+M.highlights.status_line_non_current = Highlight.new("StatusLineNC", { fg = c.niagara, bg = c["bg+4"] })
 
 -- Tabline
 
