@@ -3,6 +3,13 @@ local c = require("gruber-darker.palette")
 local opts = require("gruber-darker.config").get_opts()
 local gruber_hl = require("gruber-darker.highlights.colorscheme").highlights
 
+local normal_bg = opts.transparent and "NONE" or c.bg -- Main background
+local normal_nc_bg = opts.transparent and "NONE" or c.bg -- Background for non-current windows (can be same as normal)
+local float_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for floating windows
+local sidebar_bg = opts.transparent and "NONE" or c["bg+2"] -- Background for LineNr, FoldColumn (adjust color if needed)
+local pmenu_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for Pmenu (popup menu)
+local vert_split_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for VertSplit (adjust color if needed)
+
 ---@type HighlightsProvider
 local M = {
 	highlights = {},
@@ -20,7 +27,8 @@ M.highlights.comment = Highlight.new("Comment", { fg = c.brown, italic = opts.it
 ---Used for the columns set with 'colorcolumn'
 M.highlights.color_column = Highlight.new("ColorColumn", { bg = c["bg+2"] })
 ---Placeholder characters substituted for concealed text (see 'conceallevel')
-M.highlights.conceal = Highlight.new("Conceal", { fg = c.fg, bg = c.bg })
+-- M.highlights.conceal = Highlight.new("Conceal", { fg = c.fg, bg = c.bg })
+M.highlights.conceal = Highlight.new("Conceal", { fg = c.fg, bg = normal_bg })
 ---Character under the cursor
 M.highlights.cursor = Highlight.new("Cursor", { bg = c.yellow })
 ---The character under the cursor when |language-mapping| is used (see 'guicursor')
@@ -57,19 +65,22 @@ M.highlights.term_cursor = Highlight.new("TermCursor", { bg = c.yellow })
 ---Error messages on the command line
 M.highlights.error_msg = Highlight.new("ErrorMsg", { fg = c.white, bg = c.red })
 ---The column separating vertically split windows
-M.highlights.vert_split = Highlight.new("VertSplit", { fg = c["fg+2"], bg = c["bg+1"] })
+-- M.highlights.vert_split = Highlight.new("VertSplit", { fg = c["fg+2"], bg = c["bg+1"] })
+M.highlights.vert_split = Highlight.new("VertSplit", { fg = c["fg+2"], bg = vert_split_bg })
 ---The column separating vertically split windows
 M.highlights.win_separator = Highlight.new("WinSeparator", { fg = c["bg+2"], bold = opts.bold })
 ---Line used for closed folds
 M.highlights.folded = Highlight.new("Folded", { fg = c.brown, bg = c["bg+2"], italic = opts.italic.folds })
 ---'foldcolumn'
-M.highlights.fold_column = Highlight.new("FoldColumn", { fg = c.brown, bg = c["bg+2"] })
+-- M.highlights.fold_column = Highlight.new("FoldColumn", { fg = c.brown, bg = c["bg+2"] })
+M.highlights.fold_column = Highlight.new("FoldColumn", { fg = c.brown, bg = sidebar_bg })
 ---column where |signs| are displayed
 M.highlights.sign_column = Highlight.new("SignColumn", { fg = c["bg+2"], bg = c.none })
 ---SignColumnSB = Highlight.new("SignColumnSB", { bg = c.bg_sidebar, fg = c.fg_gutter }) ---column where |signs| are displayed
 ---Substitute = Highlight.new("Substitute", { bg = c.red, fg = c.black }) ---|:substitute| replacement text highlighting
 ---Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
-M.highlights.line_number = Highlight.new("LineNr", { fg = c["bg+4"] })
+-- M.highlights.line_number = Highlight.new("LineNr", { fg = c["bg+4"] })
+M.highlights.line_number = Highlight.new("LineNr", { fg = c["bg+4"], bg = sidebar_bg })
 ---Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 M.highlights.cursor_line_number = Highlight.new("CursorLineNr", { fg = c.yellow })
 ---The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
@@ -85,19 +96,24 @@ M.highlights.more_msg = Highlight.new("MoreMsg", { fg = c["fg+2"] })
 ---'@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 M.highlights.non_text = Highlight.new("NonText", { link = M.highlights.end_of_buffer })
 ---Normal text
-M.highlights.normal = Highlight.new("Normal", { fg = c.fg, bg = c.bg })
+--
+-- M.highlights.normal = Highlight.new("Normal", { fg = c.fg, bg = c.bg })
+M.highlights.normal = Highlight.new("Normal", { fg = c.fg, bg = normal_bg })
 ---Normal text in non-current windows
-M.highlights.normal_non_current = Highlight.new("NormalNC", { fg = c.fg, bg = c.bg })
+-- M.highlights.normal_non_current = Highlight.new("NormalNC", { fg = c.fg, bg = c.bg })
+M.highlights.normal_non_current = Highlight.new("NormalNC", { fg = c.fg, bg = normal_nc_bg })
 ---Normal text in sidebar
 M.highlights.normal_sidebar = Highlight.new("NormalSB", { fg = c.fg, bg = c["bg-1"] })
 ---Normal text in floating windows.
-M.highlights.normal_float = Highlight.new("NormalFloat", { fg = c.fg, bg = c["bg+1"] })
+-- M.highlights.normal_float = Highlight.new("NormalFloat", { fg = c.fg, bg = c["bg+1"] })
+M.highlights.normal_float = Highlight.new("NormalFloat", { fg = c.fg, bg = float_bg })
 M.highlights.float_border = Highlight.new("FloatBorder", { fg = c["bg+4"], bg = c.none })
 
 -- Popup
 
 ---Popup menu: normal item.
-M.highlights.popup_menu = Highlight.new("Pmenu", { fg = c.fg, bg = c["bg+1"] })
+-- M.highlights.popup_menu = Highlight.new("Pmenu", { fg = c.fg, bg = c["bg+1"] })
+M.highlights.popup_menu = Highlight.new("Pmenu", { fg = c.fg, bg = pmenu_bg })
 ---Popup menu: selected item.
 M.highlights.popup_menu_sel = Highlight.new("PmenuSel", { fg = c.fg, bg = c["bg+2"] })
 ---Popup menu: scrollbar.

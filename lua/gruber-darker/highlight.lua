@@ -25,17 +25,21 @@
 ---@return table<string, any>
 local function get_hl_definition_map(opts)
 	local hl = {}
-
 	for key, value in pairs(opts) do
 		if key == "fg" or key == "bg" or key == "sp" then
-			hl[key] = value:to_string()
+			if value == "NONE" then
+				hl[key] = value
+			elseif value ~= nil then
+				hl[key] = value:to_string()
+			end
 		elseif key == "link" then
-			hl[key] = value.group
+			if value and value.group then
+				hl[key] = value.group
+			end
 		else
 			hl[key] = value
 		end
 	end
-
 	return hl
 end
 
