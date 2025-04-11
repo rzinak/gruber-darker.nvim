@@ -4,11 +4,11 @@ local opts = require("gruber-darker.config").get_opts()
 local gruber_hl = require("gruber-darker.highlights.colorscheme").highlights
 
 local normal_bg = opts.transparent and "NONE" or c.bg -- Main background
-local normal_nc_bg = opts.transparent and "NONE" or c.bg -- Background for non-current windows (can be same as normal)
+local normal_nc_bg = opts.transparent and "NONE" or c.bg -- Background for non-current windows
 local float_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for floating windows
-local sidebar_bg = opts.transparent and "NONE" or c["bg+2"] -- Background for LineNr, FoldColumn (adjust color if needed)
+local sidebar_bg = opts.transparent and "NONE" or "NONE" -- Background for LineNr, FoldColumn - I set both to NONE since there's no need for a bg in this column
 local pmenu_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for Pmenu (popup menu)
-local vert_split_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for VertSplit (adjust color if needed)
+local vert_split_bg = opts.transparent and "NONE" or c["bg+1"] -- Background for VertSplit
 
 ---@type HighlightsProvider
 local M = {
